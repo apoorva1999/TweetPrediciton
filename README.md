@@ -63,3 +63,7 @@ TweetPrediciton/
 
 - Adjust hyperparameters (batch size, epochs, etc.) in the `train()` call.
 
+
+![Alt text](/image_for_fun.png)
+
+
