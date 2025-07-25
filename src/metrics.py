@@ -64,54 +64,54 @@ class MetricsCalculator:
         print("F1 Score:", f1)
         return f1
     
-def evaluate_with_generate(self, model, dataset, device):
-    """
-    Evaluate model using the generate() method (better for T5).
-    
-    Args:
-        model: Model to evaluate
-        dataset: Dataset to evaluate on
-        device: Device to run on (CPU/GPU)
+    def evaluate_with_generate(self, model, dataset, device):
+        """
+        Evaluate model using the generate() method (better for T5).
         
-    Returns:
-        tuple: (f1_score, predictions, references)
-    """
-    model.eval()
-    predictions = []
-    references = []
-    
-    # Process each example
-    for i in tqdm(range(len(dataset)), desc="Generating predictions"):
-        inputs = dataset[i]
-        input_ids = inputs["input_ids"].unsqueeze(0).to(device)
-        attention_mask = inputs["attention_mask"].unsqueeze(0).to(device)
+        Args:
+            model: Model to evaluate
+            dataset: Dataset to evaluate on
+            device: Device to run on (CPU/GPU)
+            
+        Returns:
+            tuple: (f1_score, predictions, references)
+        """
+        model.eval()
+        predictions = []
+        references = []
         
-        # Generate prediction
-        with torch.no_grad():
-            output = model.generate(
-                input_ids=input_ids,
-                attention_mask=attention_mask,
-                max_length=10
-            )
+        # Process each example
+        for i in tqdm(range(len(dataset)), desc="Generating predictions"):
+            inputs = dataset[i]
+            input_ids = inputs["input_ids"].unsqueeze(0).to(device)
+            attention_mask = inputs["attention_mask"].unsqueeze(0).to(device)
+            
+            # Generate prediction
+            with torch.no_grad():
+                output = model.generate(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    max_length=10
+                )
+            
+            # Decode prediction
+            pred_text = self.tokenizer.decode(output[0], skip_special_tokens=True).strip()
+            
+            # Decode reference (ground truth)
+            label_ids = inputs["labels"]
+            label_ids = torch.where(label_ids != -100, label_ids, self.tokenizer.pad_token_id)
+            ref_text = self.tokenizer.decode(label_ids, skip_special_tokens=True).strip()
+            
+            predictions.append(pred_text)
+            references.append(ref_text)
         
-        # Decode prediction
-        pred_text = self.tokenizer.decode(output[0], skip_special_tokens=True).strip()
+        # Calculate F1 score
+        f1 = f1_score(references, predictions, average="macro")
         
-        # Decode reference (ground truth)
-        label_ids = inputs["labels"]
-        label_ids = torch.where(label_ids != -100, label_ids, self.tokenizer.pad_token_id)
-        ref_text = self.tokenizer.decode(label_ids, skip_special_tokens=True).strip()
+        # Print sample predictions
+        print("\nSample predictions:")
+        for i in range(min(5, len(predictions))):
+            print(f"Pred: {predictions[i]} | Ref: {references[i]}")
         
-        predictions.append(pred_text)
-        references.append(ref_text)
-    
-    # Calculate F1 score
-    f1 = f1_score(references, predictions, average="macro")
-    
-    # Print sample predictions
-    print("\nSample predictions:")
-    for i in range(min(5, len(predictions))):
-        print(f"Pred: {predictions[i]} | Ref: {references[i]}")
-    
-    print(f"F1 Score: {f1:.4f}")
-    return f1, predictions, references   
+        print(f"F1 Score: {f1:.4f}")
+        return f1, predictions, references   
