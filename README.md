@@ -20,6 +20,19 @@ TweetPrediciton/
 ├── results/                # Output directory for trained models and results
 └── README.md               # Project documentation
 ```
+## Fine-tuned Model
+
+The latest fine-tuned model is available on Hugging Face Hub:  
+[apoooooorva/flan-t5-large-tweet-classification-v3](https://huggingface.co/apoooooorva/flan-t5-large-tweet-classification-v3)
+
+- You can use this model for inference directly in your code or scripts.
+- The model is compatible with Hugging Face `transformers` and can be loaded with:
+  ```python
+  from transformers import T5Tokenizer, T5ForConditionalGeneration
+  tokenizer = T5Tokenizer.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
+  model = T5ForConditionalGeneration.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
+  ```
+
 
 ## Setup Instructions
 
@@ -51,14 +64,36 @@ TweetPrediciton/
    ```
 
    The script will train the model and save results in the `results/` directory.
+6. **Run Inference** 
+This will load the fine-tuned model, run inference on the dataset, calculate f1 score and generate csv
+   ```bash
+   python src/infer_and_score.py
+   ```
+## Inference
 
-## Example CSV Format
+You can use the provided script to run inference with the fine-tuned model and evaluate its performance:
 
-| tweet                                | label_true           |
-|--------------------------------------|----------------------|
-| Vaccines are safe and effective.     | in-favor             |
-| I don't trust the vaccine.           | against              |
-| Not sure about the vaccine's effects | neutral-or-unclear   |
+1. **Load the fine-tuned model from Hugging Face Hub**
+2. **Generate predictions for each tweet in the dataset**
+3. **Calculate the weighted F1 score**
+4. **Save a new CSV with predictions**
+
+Run the following command:
+```bash
+python src/infer_and_score.py
+```
+
+- The script will automatically download the model from [Hugging Face](https://huggingface.co/apoooooorva/flan-t5-large-tweet-classification-v3).
+- It will process `Q2_20230202_majority.csv` and output `Q2_20230202_majority_with_preds.csv` with an additional `label_pred` column.
+- The weighted F1 score will be printed to the console.
+
+### Example CSV Format
+
+| tweet                                | label_true           | label_pred           |
+|--------------------------------------|----------------------|----------------------|
+| Vaccines are safe and effective.     | in-favor             | in-favor             |
+| I don't trust the vaccine.           | against              | against              |
+| Not sure about the vaccine's effects | neutral-or-unclear   | neutral-or-unclear   |
 
 ## Customization
 
