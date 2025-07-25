@@ -16,7 +16,8 @@ TweetPrediciton/
 ├── src/
 │   ├── fine_tuning.py      # Main training and evaluation pipeline
 │   └── prompt.py           # Prompt template for T5 input
-├── Q2_20230202_majority.csv # Example dataset (CSV)
+├── data/
+|   ├── Q2_20230202_majority.csv  # Dataset
 ├── results/                # Output directory for trained models and results
 └── README.md               # Project documentation
 ```
