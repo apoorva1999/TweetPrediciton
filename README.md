@@ -1,10 +1,10 @@
-# Tweet Stance Classification using T5
+# Tweet Stance Classification using Flan-T5-Large
 
 This project implements a tweet stance classification system that fine-tunes a T5 model to classify tweets as **'in-favor'**, **'against'**, or **'neutral-or-unclear'** regarding COVID-19 vaccines.
 
 ## Features
 
-- Fine-tunes a T5 (e.g., Flan-T5) model for stance classification.
+- Fine-tunes a T5 (Flan-T5-Large) model for stance classification.
 - Customizable prompt templates.
 - Weighted F1 score evaluation.
 - Modular and extensible codebase.
