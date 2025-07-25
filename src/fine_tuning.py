@@ -91,18 +91,26 @@ class TweetClassifier:
         # 6. Train model
         print("\nStarting training...")
         trainer.train()
+
         
-        # 7. Evaluate with generate
-        print("\nEvaluating with generate()...")
-        f1, preds, refs = metrics_calculator.evaluate_with_generate(
-            model, val_dataset, device
-        )
-        
-        # 8. Save model
+        # 7. Save model
         print(f"\nSaving model to {self.output_dir}")
         trainer.save_model(self.output_dir)
-        
-        return model, {"f1": f1, "predictions": preds, "references": refs}
+
+
+        # 8. Load the fined tuned model from output_dir
+        print("\nLoading best fined tuned model from disk...")
+        from transformers import T5ForConditionalGeneration
+        fined_tuned_model = T5ForConditionalGeneration.from_pretrained(self.output_dir).to(device)
+
+
+        # 9. Evaluate the loaded model
+        print("\nEvaluating loaded model on validation set...")
+        f1, preds, refs = metrics_calculator.evaluate_with_generate(
+            fined_tuned_model, val_dataset, device
+        )
+
+        return fined_tuned_model, {"f1": f1, "predictions": preds, "references": refs}
 
 
 def main():
