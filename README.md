@@ -31,6 +31,7 @@ TweetPrediciton/
 
 2. **Install dependencies**  
    It is recommended to use a virtual environment.
+   Use Python version 3.11
    ```bash
    python3 -m venv venv
    source venv/bin/activate
