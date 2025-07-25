@@ -39,13 +39,12 @@ The latest fine-tuned model is available on Hugging Face Hub:
 
 1. **Clone the repository**  
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/apoorva1999/TweetPrediciton.git
    cd TweetPrediciton
    ```
 
 2. **Install dependencies**  
-   **⚠️ Use Python version 3.11**
-   It is recommended to use a virtual environment.
+   **⚠️ Use Python version 3.11**. It is recommended to use a virtual environment.
    ```bash
    python3 -m venv venv
    source venv/bin/activate
