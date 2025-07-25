@@ -99,7 +99,18 @@ python src/infer_and_score.py
 
 - Adjust hyperparameters (batch size, epochs, etc.) in the `train()` call.
 
+## Notebook
 
-![Alt text](/image_for_fun.png)
+- **tweetclassification.ipynb**  
+  An interactive Google Collab notebook is provided for exploratory data analysis, training, inference, and visualization.  
+  You can use this notebook to:
+  - Experiment with model training and evaluation.
+  - Run inference and inspect predictions.
+  - Visualize results and metrics.
+  - **Run the code on GPU for faster training and inference.**
+
+
+
+![Alt text](image/image_for_fun.png)
 
 
