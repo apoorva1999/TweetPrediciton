@@ -13,10 +13,10 @@ from tqdm import tqdm
 
 
 from prompt import PROMPT_TEMPLATE
-from src.data import DataProcessor, TweetDataset
-from src.model import ModelBuilder
-from src.metrics import MetricsCalculator
-from src.trainer import TrainerManager
+from data import DataProcessor, TweetDataset
+from model import ModelBuilder
+from metrics import MetricsCalculator
+from trainer import TrainerManager
 
 
 class TweetClassifier:
@@ -108,7 +108,7 @@ class TweetClassifier:
 def main():
     """Main entry point for the application."""
     # Set current directory
-    os.chdir('TweetPrediciton')
+
     
     # Create classifier with configuration
     classifier = TweetClassifier(
@@ -121,8 +121,8 @@ def main():
     model, metrics = classifier.train(
         test_size=0.2,
         max_length=256,
-        batch_size=8,
-        epochs=2
+        batch_size=2,
+        epochs=5
     )
     
     print(f"\nTraining complete! Final F1 score: {metrics['f1']:.4f}")

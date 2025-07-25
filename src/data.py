@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
-from src.prompt import PROMPT_TEMPLATE
+from prompt import PROMPT_TEMPLATE
 
 
 class DataProcessor:
