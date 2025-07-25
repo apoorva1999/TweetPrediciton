@@ -30,7 +30,7 @@ for prompt in tqdm(prompts, desc="Generating predictions"):
 
 # Add predictions to DataFrame and save
 df["label_pred"] = label_pred
-df.to_csv("Q2_20230202_majority_with_preds.csv", index=False)
+df.to_csv("./results/Q2_20230202_majority.csv", index=False)
 
 # Calculate F1 score
 f1 = f1_score(df["label_true"], df["label_pred"], average="weighted")
