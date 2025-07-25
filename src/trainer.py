@@ -51,7 +51,7 @@ class TrainerManager:
             logging_steps=logging_steps,
             push_to_hub=False,
             report_to="none",
-            evaluation_strategy=eval_strategy,
+            eval_strategy="epoch",
             save_strategy="epoch",
             gradient_accumulation_steps=gradient_accumulation_steps,
             metric_for_best_model="f1",
