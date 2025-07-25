@@ -32,8 +32,7 @@ The latest fine-tuned model is available on Hugging Face Hub:
   tokenizer = T5Tokenizer.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
   model = T5ForConditionalGeneration.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
   ```
-#### Result
-![Alt text](images/fine_tuning_results.png)
+
 
 ## Setup Instructions
 
@@ -101,6 +100,6 @@ python src/infer_and_score.py
 - Adjust hyperparameters (batch size, epochs, etc.) in the `train()` call.
 
 
-![Alt text](images/image_for_fun.png)
+![Alt text](/image_for_fun.png)
 
 
