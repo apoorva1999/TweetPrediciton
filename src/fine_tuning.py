@@ -12,7 +12,7 @@ import pandas as pd
 from tqdm import tqdm
 
 
-from src.prompt import PROMPT_TEMPLATE
+from prompt import PROMPT_TEMPLATE
 from src.data import DataProcessor, TweetDataset
 from src.model import ModelBuilder
 from src.metrics import MetricsCalculator
