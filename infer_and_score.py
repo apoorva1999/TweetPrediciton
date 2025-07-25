@@ -5,10 +5,9 @@ from sklearn.metrics import f1_score
 from tqdm import tqdm
 from src.prompt import PROMPT_TEMPLATE
 
-# Load model and tokenizer from local directory
-model_dir = "./model_1/version_2/"  # adjust if your model is saved elsewhere
-tokenizer = T5Tokenizer.from_pretrained(model_dir)
-model = T5ForConditionalGeneration.from_pretrained(model_dir)
+# Load model and tokenizer from Hugging Face Hub
+model = T5ForConditionalGeneration.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
+tokenizer = T5Tokenizer.from_pretrained("apoooooorva/flan-t5-large-tweet-classification-v3")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 
