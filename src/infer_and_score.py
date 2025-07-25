@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 
 # Load dataset
-df = pd.read_csv("Q2_20230202_majority.csv").dropna(subset=["tweet", "label_true"])
+df = pd.read_csv("./data/Q2_20230202_majority.csv").dropna(subset=["tweet", "label_true"])
 
 # Prepare prompts using PROMPT_TEMPLATE
 prompts = df["tweet"].apply(lambda t: PROMPT_TEMPLATE.format(tweet=t)).tolist()

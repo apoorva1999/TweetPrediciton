@@ -120,7 +120,7 @@ def main():
     
     # Create classifier with configuration
     classifier = TweetClassifier(
-        data_path="Q2_20230202_majority.csv",
+        data_path="./data/Q2_20230202_majority.csv",
         model_name="google/flan-t5-large", 
         output_dir="./results"
     )
