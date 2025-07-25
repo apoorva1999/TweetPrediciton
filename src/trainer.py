@@ -6,7 +6,10 @@ initializing TrainingArguments and Trainer class required for training the model
 """
 
 from transformers import Trainer, TrainingArguments
+from transformers import EarlyStoppingCallback
+from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 
+from transformers import DataCollatorForSeq2Seq
 
 class TrainerManager:
     """Class for managing the training process."""
@@ -23,11 +26,12 @@ class TrainerManager:
     def create_training_args(self, 
                              learning_rate=3e-5,
                              batch_size=2,
-                             epochs=2,
+                             epochs=5,
                              weight_decay=0.01,
                              logging_steps=10,
                              eval_strategy="epoch",
-                             ):
+                             gradient_accumulation_steps=8,
+                             label_smoothing_factor=0.1):
         """
         Create training arguments.
         
@@ -37,7 +41,7 @@ class TrainerManager:
         Returns:
             TrainingArguments: Configuration for training
         """
-        return TrainingArguments(
+        return Seq2SeqTrainingArguments(
             output_dir=self.output_dir,
             learning_rate=learning_rate,
             per_device_train_batch_size=batch_size,
@@ -48,7 +52,12 @@ class TrainerManager:
             push_to_hub=False,
             report_to="none",
             evaluation_strategy=eval_strategy,
-            save_strategy="epoch"
+            save_strategy="epoch",
+            gradient_accumulation_steps=gradient_accumulation_steps,
+            metric_for_best_model="f1",
+            load_best_model_at_end=True,
+            greater_is_better=True,
+            label_smoothing_factor=label_smoothing_factor
         )
     
     def create_trainer(self, model, args, train_dataset, val_dataset, 
@@ -67,11 +76,15 @@ class TrainerManager:
         Returns:
             Trainer: Configured trainer
         """
-        return Trainer(
+        data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
+
+        return Seq2SeqTrainer(
             model=model,
             args=args,
             train_dataset=train_dataset,
             eval_dataset=val_dataset,
             tokenizer=tokenizer,
             compute_metrics=compute_metrics_fn,
+            data_collator=data_collator,
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=2)]
         )
